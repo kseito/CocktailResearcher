@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -24,12 +25,21 @@ import kotlinx.datetime.toLocalDateTime
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    mainViewModel: MainViewModel = viewModel { MainViewModel() }
+) {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
+        val cocktailList by mainViewModel.cocktailList.collectAsState()
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = "Today's date is ${todaysDate()}",
+                modifier = Modifier.padding(20.dp),
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "Today's cocktail is ${cocktailList.random()}",
                 modifier = Modifier.padding(20.dp),
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center
