@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +32,7 @@ fun App(
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         val cocktailList by mainViewModel.cocktailList.collectAsState()
+        var input by remember { mutableStateOf("") }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = "Today's date is ${todaysDate()}",
@@ -46,6 +48,17 @@ fun App(
             )
             Button(onClick = { showContent = !showContent }) {
                 Text("Click me!")
+            }
+            TextField(
+                value = input,
+                onValueChange = {
+                    input = it
+                }
+            )
+            Button(onClick = {
+                // TODO: Save alcohol to database
+            }) {
+                Text("Save")
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }
